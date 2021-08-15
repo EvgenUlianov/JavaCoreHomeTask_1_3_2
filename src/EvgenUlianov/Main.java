@@ -28,17 +28,17 @@ public class Main {
 
         GameProgress[] saves = {
                 new GameProgress(23, 43, 22, 54.4545),
-                new GameProgress(25, 45, 24,154.4545),
-                new GameProgress(28, 48, 25,254.4545)};
+                new GameProgress(25, 45, 24, 154.4545),
+                new GameProgress(28, 48, 25, 254.4545)};
 
         int index = 0;
 
         List<String> files = new ArrayList<>();
 
-        for (GameProgress save :saves) {
-            String fileName = savegames + "\\" +  String.format("autosave%d.dat", ++index);
+        for (GameProgress save : saves) {
+            String fileName = savegames + "\\" + String.format("autosave%d.dat", ++index);
             try (FileOutputStream fos = new FileOutputStream(fileName);
-                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
                 oos.writeObject(save);
                 files.add(fileName);
                 //
@@ -60,7 +60,7 @@ public class Main {
         boolean zippedSuccessfully = zipFiles(savegames, files);
 
         if (zippedSuccessfully) {
-            for (String fileName: files) {
+            for (String fileName : files) {
                 try {
                     File deletingFile = new File(fileName);
                     deletingFile.deleteOnExit();
@@ -79,10 +79,10 @@ public class Main {
         boolean itWasSuccessfully = true;
 
         try (ZipOutputStream zout = new ZipOutputStream(
-                new FileOutputStream(savegames + "\\" +  "saves.zip"))) {
+                new FileOutputStream(savegames + "\\" + "saves.zip"))) {
 
             //for (int i = 1; i <= index; i++)
-            for (String fileName: files) {
+            for (String fileName : files) {
                 String shortName = (new File(fileName)).getName())
                 try (FileInputStream fis = new FileInputStream(fileName)) {
                     ZipEntry entry = new ZipEntry(shortName);
