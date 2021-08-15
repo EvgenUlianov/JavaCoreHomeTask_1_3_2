@@ -19,7 +19,7 @@ public class Main {
             System.out.println("указанная папка не существует");
             return;
         }
-        String savegames = PATH + "\\" + "savegames";
+        String saveGames = PATH + "\\" + "savegames";
         File catalogSavegames = new File(PATH);
         if (!catalogSavegames.exists()) {
             System.out.println("папка savegames не существует");
@@ -36,7 +36,7 @@ public class Main {
         List<String> files = new ArrayList<>();
 
         for (GameProgress save : saves) {
-            String fileName = savegames + "\\" + String.format("autosave%d.dat", ++index);
+            String fileName = saveGames + "\\" + String.format("autosave%d.dat", ++index);
             try (FileOutputStream fos = new FileOutputStream(fileName);
                  ObjectOutputStream oos = new ObjectOutputStream(fos)) {
                 oos.writeObject(save);
@@ -45,19 +45,9 @@ public class Main {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
-//            File test = new File(fileName);
-//            System.out.println(test.getName());
-//            System.out.println(test.);
-//            try {
-//                System.out.println(test.getCanonicalPath());
-//            } catch (IOException ex){
-//                System.out.println(ex.getMessage());
-//
-//            }
-
         }
 
-        boolean zippedSuccessfully = zipFiles(savegames, files);
+        boolean zippedSuccessfully = zipFiles(saveGames, files);
 
         if (zippedSuccessfully) {
             for (String fileName : files) {
@@ -70,20 +60,18 @@ public class Main {
             }
 
         }
-
-
     }
 
-    public static boolean zipFiles(String savegames, List<String> files) {
+    public static boolean zipFiles(String saveGames, List<String> files) {
 
         boolean itWasSuccessfully = true;
 
         try (ZipOutputStream zout = new ZipOutputStream(
-                new FileOutputStream(savegames + "\\" + "saves.zip"))) {
+                new FileOutputStream(saveGames + "\\" + "saves.zip"))) {
 
             //for (int i = 1; i <= index; i++)
             for (String fileName : files) {
-                String shortName = (new File(fileName)).getName())
+                String shortName = (new File(fileName)).getName();
                 try (FileInputStream fis = new FileInputStream(fileName)) {
                     ZipEntry entry = new ZipEntry(shortName);
                     zout.putNextEntry(entry);
